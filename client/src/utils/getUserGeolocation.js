@@ -1,10 +1,4 @@
-// geolocation.js
 
-// Function to watch the user's geolocation with high accuracy
-// utils/geolocation.js
-// utils/geolocation.js
-
-// utils/getUserGeolocation.js
 
 export const getUserGeolocation = () => {
   return new Promise((resolve, reject) => {

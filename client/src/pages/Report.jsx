@@ -5,6 +5,7 @@ import {
   MapContainer,
   TileLayer,
   useMapEvents,
+
   Marker,
   Popup,
 } from "react-leaflet";
@@ -30,7 +31,8 @@ const CenterMarker = ({ setCenterCoordinates }) => {
 };
 
 
-const Report = () => { const [location, setLocation] = useState(null); // User's current location
+const Report = () => { 
+const [location, setLocation] = useState(null); // User's current location
 const [centerCoordinates, setCenterCoordinates] = useState(null); // Center coordinates of the map
 
 useEffect(() => {

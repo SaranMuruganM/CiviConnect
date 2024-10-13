@@ -20,17 +20,6 @@ const customIcon = new L.Icon({
   popupAnchor: [0, -41],
 });
 
-// Component to keep the marker at the center of the map
-const CenterMarker = ({ setCenterCoordinates }) => {
-  const map = useMapEvents({
-    moveend: () => {
-      const center = map.getCenter(); // Get new center coordinates when the map moves
-      setCenterCoordinates(center); // Update the center coordinates in the parent state
-    },
-  });
-
-  return null;
-};
    
 const MapViewer = () => {
   const [location, setLocation] = useState(null); // User's current location
@@ -57,26 +46,10 @@ const MapViewer = () => {
   return (
     <MapContainer
       center={[location.latitude, location.longitude]} // Center the map at the user's location
-      zoom={16}
+      zoom={14}
       className="flex h-[80vh] w-[95%] mx-auto mt-[1vh] z-40"
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      {/* Component to track map center */}
-      <CenterMarker setCenterCoordinates={setCenterCoordinates} />
-      {centerCoordinates && (
-        <Marker
-          position={centerCoordinates} // Always place the marker at the map center
-          icon={customIcon} // Custom icon for the marker
-          draggable={false} // Ensure the marker is not draggable
-        >
-          <Popup>
-            Map Center
-            <br />
-            Latitude: {centerCoordinates.lat?.toFixed(5)}, Longitude:{" "}
-            {centerCoordinates.lng?.toFixed(5)}
-          </Popup>
-        </Marker>
-      )}
       {JSON.parse(localStorage.getItem("issues")).map((problems) => {
         return (
           <MapMarker

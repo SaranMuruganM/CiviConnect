@@ -4,7 +4,7 @@ import { useDashboardContext } from '../pages/DashboardLayout';
 const SideBar = () => {
   const {setIsSidebarOpen,isSidebarOpen} = useDashboardContext();
   return (
-    <div className="w-[200px] absolute bg-custom-blue top-[80px] bottom-0 z-50 flex items-center justify-center">
+    <div className="w-[200px] fixed bg-custom-blue top-[80px] bottom-0 z-50 flex items-center justify-center">
       <div className="grid w-full gap-8 px-4 text-center *:py-1 text-md *:border-b-[0.125px] *:text-white *:cursor-pointer pt-10 *:border-custom-darkBlue">
         <Link
           to={"/dashboard"}
