@@ -3,6 +3,11 @@ import {Landing,Login,HomeLayout,Register, DashboardLayout,MapViewer, Insights, 
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import "leaflet/dist/leaflet.css";
 import {action as registerAction} from './pages/Register';
+import {action as ReportAction} from './pages/Report';
+import {action as LoginAction} from './pages/Login';
+import {loader as InsightsLoader} from './pages/Insights';
+import {loader as MapViewerLoader} from './pages/MapViewer';
+import {loader as IssuesLoader} from './pages/Issues';
 
 
 const router= createBrowserRouter([
@@ -17,6 +22,7 @@ const router= createBrowserRouter([
     {
       path:'/login',
       element: <Login/>,
+      action:LoginAction,
     },
     {
       path:'/register',
@@ -29,19 +35,23 @@ const router= createBrowserRouter([
       children:[
         {
           index:true,
-          element:<Insights/>
+          element:<Insights/>,
+          loader:InsightsLoader,
         },
         {
           path:'mapview',
-          element:<MapViewer/>
+          element:<MapViewer/>,
+          loader:MapViewerLoader,
         },
         {
           path:'Issues',
-          element:<Issues/>
+          element:<Issues/>,
+          loader:IssuesLoader,
         },
         {
           path:"report",
-          element:<Report/>
+          element:<Report/>,
+          action:ReportAction,
         }
       ]
       

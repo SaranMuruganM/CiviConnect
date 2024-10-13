@@ -1,18 +1,39 @@
-const FormRow = ({ type, name, labelText, defaultValue = "", onChange }) => {
+const FormRow = ({ type, name, labelText, defaultValue = "", options = [], onChange,styles }) => {
   return (
     <div className="*:block space-y-2">
       <label htmlFor={name} className="">
         {labelText || name}
       </label>
-      <input
-        type={type}
-        id={name}
-        name={name}
-        className=" border border-custom-lightBlue w-full p-1 text-sm rounded focus:border-custom-blue focus:outline-none focus:border-2"
-        defaultValue={defaultValue}
-        required
-        onChange={onChange}
-      />
+      {type === 'select' ? (
+        <select
+          id={name}
+          name={name}
+          className={`${
+            styles && styles
+          } border border-custom-lightBlue w-full p-1 text-sm rounded focus:border-custom-blue focus:outline-none focus:border-1`}
+          defaultValue={defaultValue}
+          required
+          onChange={onChange}
+        >
+          {options.map((option, index) => (
+            <option key={index} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          type={type}
+          id={name}
+          name={name}
+          className={`${
+            styles && styles
+          } border border-custom-lightBlue w-full p-1 text-sm rounded focus:border-custom-blue focus:outline-none focus:border-1`}
+          defaultValue={defaultValue}
+          required
+          onChange={onChange}
+        />
+      )}
     </div>
   );
 };

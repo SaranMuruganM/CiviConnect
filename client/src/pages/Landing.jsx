@@ -27,7 +27,7 @@ const Landing = () => {
         variants={fadeinVarient}
         initial="initial"
         animate="animate"
-        className="grid lg:grid-cols-2 lg:place-items-center"
+        className="grid lg:grid-cols-2 lg:place-items-center px-10"
       >
         <motion.section
           variants={fadeinVarient} // Now applying staggerChildren here

@@ -2,13 +2,19 @@ import React from "react";
 import { Form, redirect } from "react-router-dom";
 import { FormRow, Logo } from "../components";
 import { Link } from "react-router-dom";
+import axios from 'axios'
 export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const newUser = Object.fromEntries(formData);
-  let users = JSON.parse(localStorage.getItem("users")) || [];
-  users.push(newUser);
-  localStorage.setItem("users", JSON.stringify(users));
-  return redirect('/login');
+  try {
+    const formData = await request.formData();
+    const newUser = Object.fromEntries(formData);
+    const response = await axios.post('http://localhost:5100/v1/auth/register',newUser);
+    return redirect('/login');
+  } catch (error) {
+    console.log(error);
+    return null;
+    
+  }
+
 };
 
 
@@ -19,10 +25,10 @@ const Register = () => {
         <Logo styles={"w-[80%] h-full mx-auto"} />
         <h1 className="text-2xl mx-auto text-custom-blue">Register</h1>
         <Form className="grid gap-4" method="post">
-          <FormRow type={"text"} name={"name"} labelText={"Name"} />
-          <FormRow type={"text"} name={"lastName"} labelText={"Last Name"} />
+          <FormRow type={"text"} name={"username"} labelText={"Name"} />
           <FormRow type={"text"} name={"email"} labelText={"Email"} />
           <FormRow type={"password"} name={"password"} labelText={"Password"} />
+          <FormRow type={"text"} name={"city"} labelText={"City"} />
           <button className="bg-custom-darkBlue text-white rounded border p-1">
             Submit
           </button>

@@ -10,7 +10,7 @@ const Navbar = ({ motionVarient }) => {
   const context = useDashboardContext();
 
   return (
-    <div className="h-[80px] fixed inset-0 border py-4 flex items-center justify-between lg:px-8 px-4 lg:pr-16 z-[999]">
+    <div className="h-[80px] fixed inset-0 border py-4 flex items-center justify-between lg:px-8 px-4 lg:pr-16 z-[999] bg-white">
       <div className="flex items-center gap-12">
         {context?.user && (
           <motion.div
