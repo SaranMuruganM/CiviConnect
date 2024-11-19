@@ -2,15 +2,22 @@ import { json } from "express";
 import Issue from "../models/issueModel.js";
 
 export const checkLoggedIn = (req, res, next) => {
+  try {
+    let userData = req.cookies?.userData;
 
-  let userData = req.cookies?.userData;
-  userData= JSON.parse(userData);
-  
-  
-  if (!userData) {
-    return res.status(401).json({ msg: "Unauthorized. Please log in." });
+    if (!userData) {
+      return res.status(401).json({ msg: "Unauthorized. Please log in." });
+    }
+
+    userData = JSON.parse(userData);
+    req.userData = userData;
+
+    next();
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ msg: "Invalid user data. Please log in again." });
   }
-  next();
 };
 
 
