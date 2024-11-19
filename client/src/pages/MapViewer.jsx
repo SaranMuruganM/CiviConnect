@@ -26,7 +26,7 @@ export const loader = async () => {
 
   try {
     const response = await axios.get(
-      `http://localhost:5100/v1/issues/city/${userData.city}`,
+      `https://civiconnect.onrender.com/v1/issues/city/${userData.city}`,
       {
         withCredentials: true,
       }
@@ -59,8 +59,7 @@ const MapViewer = () => {
 
   useEffect(() => {
     if (data) {
-
-      setIssues(data.data); 
+      setIssues(data.data);
     }
   }, [data]);
 
@@ -68,7 +67,7 @@ const MapViewer = () => {
     return <div>Loading map...</div>;
   }
   console.log(issues);
-  
+
   return (
     <div className="relative">
       <MapContainer
@@ -78,18 +77,16 @@ const MapViewer = () => {
         style={{ position: 'relative' }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {issues.length > 0 && (
+        {issues.length > 0 &&
           issues.map((problems) => (
             <MapMarker
               key={problems._id}
-              position={[problems.latitude,problems.longitude]}
+              position={[problems.latitude, problems.longitude]}
               description={problems.description}
               problem={problems.problem}
               status={problems.status}
-           
             />
-          ))
-        )}
+          ))}
 
         <RecenterButton setLocation={setLocation} />
       </MapContainer>

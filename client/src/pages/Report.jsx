@@ -24,8 +24,7 @@ export const action = async ({ request }) => {
       formData.append(key, value);
     }
 
-    // Submit the form data
-    await axios.post('http://localhost:5100/v1/issues', formData, {
+    await axios.post('https://civiconnect.onrender.com/v1/issues', formData, {
       withCredentials: true,
     });
 

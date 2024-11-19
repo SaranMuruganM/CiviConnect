@@ -7,12 +7,16 @@ import axios from 'axios';
 export const action = async ({ request }) => {
   try {
     const formData = await request.formData();
-    
+
     const user = Object.fromEntries(formData);
-    const response = await axios.post('http://localhost:5100/v1/auth/login', user, {
-      withCredentials: true,
-    });
-    
+    const response = await axios.post(
+      'https://civiconnect.onrender.com/v1/auth/login',
+      user,
+      {
+        withCredentials: true,
+      }
+    );
+
     return redirect('/dashboard');
   } catch (error) {
     console.log(error);

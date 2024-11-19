@@ -4,9 +4,12 @@ import axios from 'axios';
 
 export const loader = async () => {
   try {
-    const response = await axios.get('http://localhost:5100/v1/issues/', {
-      withCredentials: true,
-    });
+    const response = await axios.get(
+      'https://civiconnect.onrender.com/v1/issues/',
+      {
+        withCredentials: true,
+      }
+    );
     return response.data; // Return the actual data
   } catch (error) {
     console.log('Error fetching issues:', error);
@@ -24,7 +27,11 @@ const Issues = () => {
   const [updatedStatus, setUpdatedStatus] = useState('pending'); // Default status selection
 
   if (!filteredIssues.length) {
-    return <div>No issues found.</div>; // Provide feedback when there are no issues
+    return (
+      <div className="text-center mt-10 font-bold tracking-wider text-2xl">
+        You haven't created any issues
+      </div>
+    ); // Provide feedback when there are no issues
   }
 
   // Filter issues based on selected status
@@ -35,7 +42,7 @@ const Issues = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5100/v1/issues/${id}`, {
+      await axios.delete(`https://civiconnect.onrender.com/v1/issues/${id}`, {
         withCredentials: true,
       });
 
@@ -61,9 +68,13 @@ const Issues = () => {
         dataToUpdate.description = updatedDescription; // Include description only if provided
       }
 
-      await axios.patch(`http://localhost:5100/v1/issues/${id}`, dataToUpdate, {
-        withCredentials: true,
-      });
+      await axios.patch(
+        `https://civiconnect.onrender.com/v1/issues/${id}`,
+        dataToUpdate,
+        {
+          withCredentials: true,
+        }
+      );
 
       // Update the issue locally after successful update
       setFilteredIssues((prevIssues) =>
