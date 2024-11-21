@@ -1,4 +1,13 @@
-const FormRow = ({ type, name, labelText, defaultValue = "", options = [], onChange,styles }) => {
+const FormRow = ({
+  type,
+  name,
+  labelText,
+  defaultValue = '',
+  options = [],
+  styles,
+  setSelectedOption,
+  onChange
+}) => {
   return (
     <div className="*:block space-y-2">
       <label htmlFor={name} className="">
@@ -8,12 +17,12 @@ const FormRow = ({ type, name, labelText, defaultValue = "", options = [], onCha
         <select
           id={name}
           name={name}
+          onChange={(e) => setSelectedOption(e.target.value)}
           className={`${
             styles && styles
           } border border-custom-lightBlue w-full p-1 text-sm rounded focus:border-custom-blue focus:outline-none focus:border-1`}
           defaultValue={defaultValue}
           required
-          onChange={onChange}
         >
           {options.map((option, index) => (
             <option key={index} value={option.value}>

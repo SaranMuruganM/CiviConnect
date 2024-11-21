@@ -1,20 +1,33 @@
 import Issue from "../models/issueModel.js";
-
 export const getIssuesById = async (req, res) => {
- 
-  
-  let userData = req.cookies?.userData;
-  userData = JSON.parse(userData);
-  let createdBy = userData?.id;
-
-  
   try {
-    // Fetch issues created by the user and populate the createdBy field
-    const issues = await Issue.find({ createdBy }).populate("createdBy");
+    let userData = req.cookies?.userData;
+    userData = JSON.parse(userData);
+
+    const userId = userData?.id;
+    const userCity = userData?.city;
+    const isAdmin = userData?.role === "admin"; // Assuming the user's role is stored in userData
+
+    let issues = [];
+
+    if (isAdmin) {
+      // If the user is an admin, fetch all issues from the same city
+      issues = await Issue.find({ city: userCity }).populate("createdBy");
+    } else {
+      // If the user is not an admin, fetch issues created by the user
+      issues = await Issue.find({ createdBy: userId }).populate("createdBy");
+    }
+
     // Calculate counts based on issue status
-    const pendingCount = issues.filter(issue => issue.status === "pending").length;
-    const resolvedCount = issues.filter(issue => issue.status === "resolved").length;
-    const ongoingCount = issues.filter(issue => issue.status === "ongoing").length;
+    const pendingCount = issues.filter(
+      (issue) => issue.status === "pending"
+    ).length;
+    const resolvedCount = issues.filter(
+      (issue) => issue.status === "resolved"
+    ).length;
+    const ongoingCount = issues.filter(
+      (issue) => issue.status === "ongoing"
+    ).length;
 
     // Return the issues and their counts
     return res.status(200).json({
@@ -29,6 +42,7 @@ export const getIssuesById = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 
 export const updateIssue = async (req, res) => {

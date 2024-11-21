@@ -14,9 +14,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
-app.use(
-  cors({ origin: "https://civiconnectv1.onrender.com", credentials: true })
-);
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 
 app.use(express.json());
@@ -25,9 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/v1/auth/", authRouter);
 app.use("/v1/issues/", checkLoggedIn, issuesRouter);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/dist", "index.html"));
-});
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

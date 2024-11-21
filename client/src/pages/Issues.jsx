@@ -5,7 +5,7 @@ import axios from 'axios';
 export const loader = async () => {
   try {
     const response = await axios.get(
-      'https://civiconnect.onrender.com/v1/issues/',
+      `${import.meta.env.VITE_SERVER_URL}/v1/issues/`,
       {
         withCredentials: true,
       }
@@ -42,9 +42,12 @@ const Issues = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://civiconnect.onrender.com/v1/issues/${id}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `${import.meta.env.VITE_SERVER_URL}/v1/issues/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
 
       // Remove the deleted issue from the filteredIssues state
       setFilteredIssues((prevIssues) =>
@@ -69,7 +72,7 @@ const Issues = () => {
       }
 
       await axios.patch(
-        `https://civiconnect.onrender.com/v1/issues/${id}`,
+        `${import.meta.env.VITE_SERVER_URL}/v1/issues/${id}`,
         dataToUpdate,
         {
           withCredentials: true,

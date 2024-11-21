@@ -1,5 +1,5 @@
 import React from 'react'
-import {Landing,Login,HomeLayout,Register, DashboardLayout,MapViewer, Insights, Issues, Report} from './pages'
+import {Landing,Login,HomeLayout,Register, DashboardLayout,MapViewer, Insights, Issues, Report,Mission} from './pages'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import "leaflet/dist/leaflet.css";
 import {action as registerAction} from './pages/Register';
@@ -52,6 +52,11 @@ const router= createBrowserRouter([
           path:"report",
           element:<Report/>,
           action:ReportAction,
+        },
+        {
+          path:"mission",
+          element:<Mission/>,
+          
         }
       ]
       

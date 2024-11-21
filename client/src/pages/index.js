@@ -7,4 +7,5 @@ export { default as MapViewer } from "./MapViewer";
 export { default as Insights } from "./Insights";
 export { default as Report } from "./Report";
 export { default as Issues } from "./Issues";
+export { default as Mission } from "./Mission";
 

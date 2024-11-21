@@ -10,9 +10,10 @@ export const loader = async () => {
   const userData = data ? JSON.parse(data) : null;
   const city = userData?.city;
 
+  
   try {
     const response = await axios.get(
-      `https://civiconnect.onrender.com/v1/issues/city/${city}`,
+      `${import.meta.env.VITE_SERVER_URL}/v1/issues/city/${city}`,
       { withCredentials: true }
     );
     return response.data;

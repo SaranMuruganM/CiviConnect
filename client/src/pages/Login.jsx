@@ -10,7 +10,7 @@ export const action = async ({ request }) => {
 
     const user = Object.fromEntries(formData);
     const response = await axios.post(
-      'https://civiconnect.onrender.com/v1/auth/login',
+      `${import.meta.env.VITE_SERVER_URL}/v1/auth/login`,
       user,
       {
         withCredentials: true,
@@ -19,7 +19,7 @@ export const action = async ({ request }) => {
 
     return redirect('/dashboard');
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data.message);
     return null;
   }
 };

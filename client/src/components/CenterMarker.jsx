@@ -11,7 +11,7 @@ const CenterMarker = ({ setMarkerCoordinates, centerCoordinates,setCenterCoordin
       // When the user clicks on the map, set the marker coordinates
       const { lat, lng } = event.latlng;
       setMarkerCoordinates([lat, lng]);
-      map.setView([lat, lng], map.getZoom()); // Center the map on the clicked location
+      // map.setView([lat, lng], map.getZoom()); // Center the map on the clicked location
     },
   });
 

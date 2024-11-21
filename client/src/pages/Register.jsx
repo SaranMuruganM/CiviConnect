@@ -8,7 +8,7 @@ export const action = async ({ request }) => {
     const formData = await request.formData();
     const newUser = Object.fromEntries(formData);
     const response = await axios.post(
-      'https://civiconnect.onrender.com/v1/auth/register',
+      `${import.meta.env.VITE_SERVER_URL}/v1/auth/register`,
       newUser
     );
     return redirect('/login');

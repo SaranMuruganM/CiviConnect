@@ -35,7 +35,7 @@ const SideBar = () => {
           Reported Issues
         </Link>
         <Link
-          to={"stats"}
+          to={"mission"}
           className="hover:pl-4"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         >

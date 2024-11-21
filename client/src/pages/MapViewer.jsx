@@ -26,7 +26,7 @@ export const loader = async () => {
 
   try {
     const response = await axios.get(
-      `https://civiconnect.onrender.com/v1/issues/city/${userData.city}`,
+      `${import.meta.env.VITE_SERVER_URL}/v1/issues/city/${userData.city}`,
       {
         withCredentials: true,
       }

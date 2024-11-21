@@ -5,7 +5,7 @@ const IssueSchema = new mongoose.Schema(
     problem: {
       type: String,
       required: true,
-      enum: ["road", "electricity", "fire", "water"],
+      enum: ["road", "electricity", "fire", "water","sanitary"],
     },
     description: {
       type: String,

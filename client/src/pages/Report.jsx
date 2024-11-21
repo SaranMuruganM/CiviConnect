@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from 'react';
-import { Form, redirect } from 'react-router-dom';
-import { FormRow, CenterMarker } from '../components';
+import { Form, redirect, useAsyncError } from 'react-router-dom';
+import { FormRow, CenterMarker, RecenterButton } from '../components';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import { getUserGeolocation } from '../utils/getUserGeolocation';
 import axios from 'axios';
-
+import issues from '../utils/iconMarkers';
 const customIcon = new L.Icon({
   iconUrl:
     'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
@@ -19,16 +19,14 @@ export const action = async ({ request }) => {
     const formData = new FormData(); // Create a new FormData object
     const data = await request.formData(); // Get the form data
 
-    // Append form data to the FormData object
     for (const [key, value] of data.entries()) {
       formData.append(key, value);
     }
 
-    await axios.post('https://civiconnect.onrender.com/v1/issues', formData, {
+    await axios.post(`${import.meta.env.VITE_SERVER_URL}/v1/issues`, formData, {
       withCredentials: true,
     });
 
-    // Redirect to the dashboard after successful submission
     return redirect('/dashboard');
   } catch (error) {
     console.log(error);
@@ -37,17 +35,17 @@ export const action = async ({ request }) => {
 };
 
 const Report = () => {
-  const [location, setLocation] = useState(null); // User's current location
-  const [centerCoordinates, setCenterCoordinates] = useState(null); // Center coordinates of the map
-  const [markerCoordinates, setMarkerCoordinates] = useState(null); // Store coordinates of the marker
+  const [location, setLocation] = useState(null);
+  const [centerCoordinates, setCenterCoordinates] = useState(null);
+  const [markerCoordinates, setMarkerCoordinates] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('default'); // Store the selected issue type
 
-  // Fetch the user's geolocation on component mount
   useEffect(() => {
     const fetchLocation = async () => {
       try {
-        const loc = await getUserGeolocation(); // Get user's geolocation
+        const loc = await getUserGeolocation();
         setLocation(loc);
-        setCenterCoordinates([loc.latitude, loc.longitude]); // Set initial center coordinates
+        setCenterCoordinates([loc.latitude, loc.longitude]);
       } catch (error) {
         console.error('Geolocation error:', error);
       }
@@ -72,6 +70,7 @@ const Report = () => {
         labelText={'Select Your Related Problem :'}
         defaultValue={'null'}
         styles={'w-[70%]'}
+        setSelectedOption={setSelectedOption} // Update selected issue type
         options={[
           { value: 'null', label: 'Select an Issue' },
           {
@@ -87,6 +86,11 @@ const Report = () => {
             label: 'Fire (Fires, hazardous situations, etc...)',
           },
           { value: 'water', label: 'Water (Leaks, shortages, etc...)' },
+          {
+            value: 'sanitary',
+            label:
+              'Sanitary (Garbage dumps,Waste management, cleanliness, etc...)',
+          },
         ]}
       />
 
@@ -112,19 +116,19 @@ const Report = () => {
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
         <CenterMarker
-          setMarkerCoordinates={setMarkerCoordinates} // Pass setter for marker coordinates
-          centerCoordinates={centerCoordinates} // Pass current center to initialize map
+          setMarkerCoordinates={setMarkerCoordinates}
+          centerCoordinates={centerCoordinates}
           setCenterCoordinates={setCenterCoordinates}
         />
 
-        {/* Display a marker at the map's center */}
-        {markerCoordinates && ( // Render marker only if markerCoordinates is set
+        {markerCoordinates && (
           <Marker
-            position={markerCoordinates} // Marker at the updated coordinates
-            icon={customIcon} // Custom icon for the marker
-            draggable={false} // Marker is not draggable
+            position={markerCoordinates}
+            icon={issues[selectedOption]} // Set icon based on selected option
+            draggable={false}
           />
         )}
+        <RecenterButton setLocation={setLocation} />
       </MapContainer>
       <input
         type="hidden"
