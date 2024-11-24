@@ -14,13 +14,10 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
-<<<<<<< HEAD
+
 app.use(
   cors({ origin: "https://civiconnectv1.onrender.com", credentials: true })
 );
-=======
-app.use(cors({ origin: "https://civiconnect.onrender.com", credentials: true }));
->>>>>>> a5d293a0f6ad09a914442bdf5482de235d052d3e
 
 
 app.use(express.json());
